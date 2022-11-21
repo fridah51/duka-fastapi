@@ -1,11 +1,8 @@
 from datetime import datetime
 from pydantic import BaseModel
 from typing import Optional,List
-import itertools
 
 
-# id_iter = itertools.count()
-#(next(id_iter))
 
 class SalesBase(BaseModel): 
    quantity:int
@@ -21,6 +18,7 @@ class SalesPut(BaseModel):
 
 class Sales(SalesBase):
     id:int
+    product_id:int
     created:datetime
     
     class Config:

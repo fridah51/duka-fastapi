@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from datetime import datetime
 from typing import Dict, Generator, List
+from fastapi.middleware.cors import CORSMiddleware
+
 
 
 from db.base_class import Base
@@ -16,10 +18,22 @@ Base.metadata.create_all(bind=engine)
 from api_routes.api import router
 
 app = FastAPI(
-    title="Todo API",
-    description = "A basic todo api",
+    title="Duka API",
+    description = "A basic duka api",
     version = "0.2.0",
 )
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=[ "Accept: application/json; odata=nometadata" ],
+)
+
 
 app.include_router(router, responses={200:{"description":"Ok"}})
 
