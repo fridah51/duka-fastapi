@@ -23,7 +23,7 @@ def get_db() -> Generator:
 
 
 @sales_router.get("", 
-summary="get a list of all todo items",
+summary="get a list of all sales",
 status_code=200,
 response_model=List[Sales]
 )
@@ -33,20 +33,20 @@ def sales(db:Session = Depends(get_db)):
 
 
 
-@sales_router.get("/{saleID}", 
-response_model=SalesInDb,
-summary="get a todo item",
+@sales_router.get("/{prodID}", 
+response_model=List[Sales],
+summary="get one sale",
 status_code=200
 )
-def sale(saleID:int, db:Session = Depends(get_db)):
+def sale(prodID:int, db:Session = Depends(get_db)):
     
-    tod = db.query(SalesModel).filter(SalesModel.id == saleID).first()
-    prodID = db.query(ProductsModel).filter(ProductsModel.id == tod.product_id).first()
+    # tod = db.query(SalesModel).filter(ProductsModel.id == prodID).all()
+    pID = db.query(SalesModel).filter(SalesModel.product_id == prodID).all()
     
-    if not prodID:
-        raise HTTPException(status_code=401, detail=f"{prodID} :user id doesn't exists ")
+    if not pID:
+        raise HTTPException(status_code=401, detail=f"{pID} :product id doesn't exists ")
     
-    return tod
+    return pID
 
 
 @sales_router.post("", 

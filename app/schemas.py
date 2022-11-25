@@ -6,10 +6,10 @@ from typing import Optional,List
 
 class SalesBase(BaseModel): 
    quantity:int
-   
+   product_id:int
    
 class SalesCreate(SalesBase):
-    product_id:int
+    pass
    
 
 class SalesPut(BaseModel):
