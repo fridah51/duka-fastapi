@@ -3,10 +3,10 @@ from typing import List,Dict,Generator
 from sqlalchemy.orm import Session
 
 
-from db.session import SessionLocal
-from models.sales import SalesModel
-from models.inventory import ProductsModel
-from schemas import Sales,SalesCreate,SalesInDb,SalesPut
+from app.db.session import SessionLocal
+from app.models.sales import SalesModel
+from app.models.inventory import ProductsModel
+from ..schemas import Sales,SalesCreate,SalesInDb,SalesPut
 
 
 sales_router = APIRouter()

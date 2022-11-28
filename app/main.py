@@ -5,17 +5,16 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 
-from db.base_class import *
-from db.session import SessionLocal, engine
-from models.inventory import ProductsModel
-from models.sales import SalesModel
+from  app.db.base_class import *
+from  app.db.session import SessionLocal, engine
+
 
 #create tables
 Base.metadata.create_all(bind=engine)
 
 
 #router
-from api_routes.api import router
+from  app.api_routes.api import router
 
 app = FastAPI(
     title="Duka API",

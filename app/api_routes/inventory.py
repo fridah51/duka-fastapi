@@ -3,9 +3,9 @@ from typing import List,Dict,Generator
 from sqlalchemy.orm import Session
 
 
-from schemas import Products,ProductsCreate,ProductsInDb,ProductsPut
-from db.session import  SessionLocal
-from models.inventory import ProductsModel
+from ..schemas import Products,ProductsCreate,ProductsInDb,ProductsPut
+from app.db.session import  SessionLocal
+from app.models.inventory import ProductsModel
 
 
 products_router = APIRouter()
