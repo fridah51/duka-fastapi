@@ -49,8 +49,7 @@ class Products(ProductsBase):
     class Config:
         orm_mode = True
     
-class ProductsInDb(ProductsBase):
-    id:int
+class ProductsInDb(Products):
     slase:List[Sales]
     
     class Config:

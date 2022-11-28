@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import psycopg2
 
-engine = create_engine("postgresql://postgres:21post@localhost:5432/duka")
+
+engine = create_engine("sqlite:///duka.db")
 SessionLocal = sessionmaker(bind=engine, autocommit=False , autoflush=False)
 conn = SessionLocal()

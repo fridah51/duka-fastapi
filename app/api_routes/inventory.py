@@ -34,12 +34,15 @@ def prod(db:Session= Depends(get_db)):
 
 #get single product
 @products_router.get("/{prodID}",
-response_model=ProductsInDb,
+response_model=List[ProductsInDb],
 summary="single product",
 status_code=200
 )
 def prod(prodID:int, db:Session= Depends(get_db)):
-    return db.query(ProductsModel).filter(ProductsModel.id == prodID).first()
+    oneP = db.query(ProductsModel).filter(ProductsModel.id == prodID).first()
+    if not oneP:
+        raise HTTPException(status_code=401, detail=f"{prodID} doesn't exists ")
+    return oneP
 
 
 @products_router.post("",

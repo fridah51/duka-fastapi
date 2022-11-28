@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 
-from db.base_class import Base
+from db.base_class import *
 from db.session import SessionLocal, engine
 from models.inventory import ProductsModel
 from models.sales import SalesModel
