@@ -5,11 +5,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 
-from  app.db.base_class import *
+from  app.db.base_class import Base
 from  app.db.session import SessionLocal, engine
-
+from  .models import inventory,sales,stkcallback
 
 #create tables
+
 Base.metadata.create_all(bind=engine)
 
 
@@ -29,8 +30,7 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
-    expose_headers=[ "Accept: application/json; odata=nometadata" ],
+    allow_headers=["*"]
 )
 
 

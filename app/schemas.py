@@ -61,3 +61,31 @@ class SalesInDb(SalesBase):
     prod:Products
     class Config:
         orm_mode = True
+
+
+
+#stkpush schema sasa
+class StkResponse(BaseModel):
+    MerchantRequestID:int
+    CheckoutRequestID: str
+    ResponseCode: str
+    ResponseDescription: str
+    CustomerMessage: str
+
+
+class StkRequestBody(BaseModel):
+    BusinessShortCode: Optional[int] 
+    Password: str
+    Timestamp: str
+    TransactionType: Optional[str] 
+    Amount: int
+    PartyA: int
+    PartyB: int
+    PhoneNumber: int
+    CallBackURL: Optional[str] 
+    AccountReference: Optional[str]
+    TransactionDesc: Optional[str] 
+
+
+class CallBackResponse():
+    pass
