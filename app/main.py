@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from datetime import datetime
 from typing import Dict, Generator, List
 from fastapi.middleware.cors import CORSMiddleware
-
+import requests
+from requests.auth import HTTPBasicAuth
 
 
 from  app.db.base_class import Base
@@ -11,7 +12,7 @@ from  .models import inventory,sales,stkcallback
 
 #create tables
 
-Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)  # type: ignore
 
 
 #router
@@ -21,6 +22,7 @@ app = FastAPI(
     title="Duka API",
     description = "A basic duka api",
     version = "0.2.0",
+    
 )
 
 origins = ["*"]
@@ -43,7 +45,7 @@ def get_db() -> Generator:
         db = SessionLocal()
         yield db
     finally:
-        db.close()
+        db.close()          # type: ignore
 
 
 
@@ -54,4 +56,5 @@ status_code=200,
 def home():
     
    return "Hello you!"
+
 

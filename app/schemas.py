@@ -63,6 +63,14 @@ class SalesInDb(SalesBase):
         orm_mode = True
 
 
+class QtyPrice(BaseModel):
+    qty:int
+    price:int
+
+    class Config:
+        orm_mode = True
+
+
 
 #stkpush schema sasa
 class StkResponse(BaseModel):
@@ -74,17 +82,8 @@ class StkResponse(BaseModel):
 
 
 class StkRequestBody(BaseModel):
-    BusinessShortCode: Optional[int] 
-    Password: str
-    Timestamp: str
-    TransactionType: Optional[str] 
-    Amount: int
-    PartyA: int
-    PartyB: int
-    PhoneNumber: int
-    CallBackURL: Optional[str] 
-    AccountReference: Optional[str]
-    TransactionDesc: Optional[str] 
+    amount: int
+    mobile: int
 
 
 class CallBackResponse():

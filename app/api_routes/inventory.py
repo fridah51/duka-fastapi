@@ -17,7 +17,7 @@ def get_db() -> Generator:
         db = SessionLocal()
         yield db
     finally:
-        db.close()
+        db.close()         #type:ignore
 
 
 
@@ -28,7 +28,7 @@ response_model=List[Products],
 summary="all products",
 status_code=200
 )
-def prod(db:Session= Depends(get_db)):
+def prods(db:Session= Depends(get_db)):
     return db.query(ProductsModel).all()
 
 

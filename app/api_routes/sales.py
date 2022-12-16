@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.db.session import SessionLocal
 from app.models.sales import SalesModel
 from app.models.inventory import ProductsModel
-from ..schemas import Sales,SalesCreate,SalesInDb,SalesPut
+from ..schemas import Sales,SalesCreate,SalesInDb,SalesPut,QtyPrice
 
 
 sales_router = APIRouter()
@@ -17,7 +17,7 @@ def get_db() -> Generator:
         db = SessionLocal()
         yield db
     finally:
-        db.close()
+        db.close() #type: ignore
 
 
 
@@ -33,24 +33,39 @@ def sales(db:Session = Depends(get_db)):
 
 
 
-@sales_router.get("/{prodID}", 
-response_model=List[Sales],
+@sales_router.get("/{saleID}", 
+response_model=List[SalesInDb],
 summary="get one sale",
 status_code=200
 )
-def sale(prodID:int, db:Session = Depends(get_db)):
+def sale(saleID:int, db:Session = Depends(get_db)):
     
-    # tod = db.query(SalesModel).filter(ProductsModel.id == prodID).all()
-    pID = db.query(SalesModel).filter(SalesModel.product_id == prodID).all()
+    sID = db.query(SalesModel).filter(SalesModel.id == saleID).all()
     
-    if not pID:
-        raise HTTPException(status_code=401, detail=f"{pID} :product id doesn't exists ")
+    if not sID:
+        raise HTTPException(status_code=401, detail=f"{sID} : sale doesn't exists ")
     
-    return pID
+    return sID
+
+
+@sales_router.get("/s/{prodID}", 
+response_model=List[SalesInDb],
+summary="get one sale",
+status_code=200
+)
+def salep(prodID:int, db:Session = Depends(get_db)):
+    
+    sID = db.query(SalesModel).filter(SalesModel.product_id == prodID).all()
+    # all sales of one product
+    if not sID:
+        raise HTTPException(status_code=401, detail=f"{sID} : sale doesn't exists ")
+    
+    return sID
+
 
 
 @sales_router.post("", 
-response_model=Sales,
+response_model=SalesInDb,
 summary="make a sale",
 status_code=201
 )

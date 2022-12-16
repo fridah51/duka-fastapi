@@ -6,7 +6,8 @@ import requests
 from requests.auth import HTTPBasicAuth
 import json
 
-from ..schemas import StkResponse,StkRequestBody
+from  ..schemas import StkResponse,StkRequestBody
+
 
 
 stkpush_router = APIRouter()
@@ -24,9 +25,6 @@ print(decoded_password, timestamp)
 
 
 
-
-
-
 def getAccessToken():
     Consumer_Key = "vAtF2qnWAXFIMR15yFoI4VaTkG3hjCLG"
     Consumer_Secret = "NYiGPialXh3u656l"
@@ -36,15 +34,13 @@ def getAccessToken():
     return r.json()['access_token']
 
 
-token = getAccessToken()
-
 
 @stkpush_router.post("", 
 summary="make an stkpush",
 status_code=201
 )
-def  post_stk( ):
-    
+async def post_stk( payloads:StkRequestBody):
+    token = getAccessToken()
 
     headers = {
     'Authorization': "Bearer %s" % token
@@ -54,10 +50,10 @@ def  post_stk( ):
         "Password": decoded_password,
         "Timestamp": timestamp,
         "TransactionType": "CustomerPayBillOnline",
-        "Amount": 5,
-        "PartyA": 254705151437,
+        "Amount": payloads.amount,
+        "PartyA": payloads.mobile,
         "PartyB": 174379,
-        "PhoneNumber": 254705151437,
+        "PhoneNumber": payloads.mobile,
         "CallBackURL": "https://mydomain.com/path",
         "AccountReference": "CompanyXLTD",
         "TransactionDesc": "Payment of X" 
